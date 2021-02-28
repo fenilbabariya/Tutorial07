@@ -59,11 +59,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return true;
         }
     }
-     public Cursor getData(){
-         SQLiteDatabase db = this.getWritableDatabase();
 
+    public Boolean checkData(String username, String password){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM "+TABLE+" WHERE Username = ? and Password = ?", new String[] {username, password});
 
-         Cursor cursor = db.rawQuery("SELECT * FROM "+TABLE,null);
-         return null;
-     }
+        if(cursor.getCount() > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

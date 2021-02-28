@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Tutorial07">
         <activity android:name=".Welcome" android:label="@string/welcome" />
-        <activity android:name=".Registration" android:label="@string/registration"/>
+        <activity android:name=".Registration" android:label="@string/registration" android:parentActivityName=".Login"/>
         <activity android:name=".Login" android:label="@string/login"/>
         <activity
             android:name=".SplashActivity"

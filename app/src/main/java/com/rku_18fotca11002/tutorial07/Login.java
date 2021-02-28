@@ -4,11 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class Login extends AppCompatActivity {
@@ -24,6 +26,7 @@ public class Login extends AppCompatActivity {
 
         edtName = findViewById(R.id.txtuname);
         edtPassword = findViewById(R.id.txtPsw);
+        btnLogin = findViewById(R.id.btnLogin);
         db = new DatabaseHelper(this);
         GetData();
     }
@@ -49,11 +52,17 @@ public class Login extends AppCompatActivity {
                 }
                 if(password.length() < 6){
                     Toast.makeText(Login.this, "Password must not be less than 6 letters", Toast.LENGTH_SHORT).show();
+                    return;
                 }
 
-                if(uname.equals("admin@gmail.com") && password.equals("123456")){
+                Boolean check = db.checkData(uname, password);
+                if(check){
+                    Toast.makeText(Login.this, "Login Sucessfull", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(Login.this,Welcome.class));
                     finish();
+                }else{
+                    Toast.makeText(Login.this, "Invalid Username or Password!", Toast.LENGTH_SHORT).show();
+                    return;
                 }
             }
         });
