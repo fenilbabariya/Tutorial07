@@ -2,6 +2,7 @@ package com.rku_18fotca11002.tutorial07;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -96,6 +97,8 @@ public class Registration extends AppCompatActivity {
 
                 if(db.insertData(fname,lname,uname,psw,branch,gender,city,profile)){
                     Toast.makeText(Registration.this, "Registration Successful", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(Registration.this,Login.class));
+                    finish();
                 }else{
                     Toast.makeText(Registration.this, "Registration Failed!", Toast.LENGTH_SHORT).show();
                 }

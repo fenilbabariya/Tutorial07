@@ -33,6 +33,7 @@
     <string name="general">General</string>
     <string name="ce_it">CE / IT</string>
     <string name="active">Active</string>
+    <string name="about">About</string>
     <string-array name="city">
         <item>Rajkot</item>
         <item>Junagadh</item>
