@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -17,7 +18,7 @@ public class Login extends AppCompatActivity {
     EditText edtName, edtPassword;
     Button btnLogin;
     DatabaseHelper db;
-
+    SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,10 +58,14 @@ public class Login extends AppCompatActivity {
 
                 Boolean check = db.checkData(uname, password);
                 if(check){
-                    Toast.makeText(Login.this, "Login Sucessfull", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(Login.this,Welcome.class);
-                    intent.putExtra("username", uname);
-                    startActivity(intent);
+                    Toast.makeText(Login.this, "Login Successfull", Toast.LENGTH_SHORT).show();
+
+                    preferences = getSharedPreferences("user",MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("username",uname);
+                    editor.commit();
+
+                    startActivity(new Intent(Login.this,Welcome.class));
                     finish();
                 }else{
                     Toast.makeText(Login.this, "Invalid Username or Password!", Toast.LENGTH_SHORT).show();

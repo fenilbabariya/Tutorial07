@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.accessibilityservice.GestureDescription;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.tv.TvContract;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,15 +15,18 @@ import android.widget.Toast;
 
 public class Welcome extends AppCompatActivity {
     TextView textView;
+    SharedPreferences preferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         textView = findViewById(R.id.txtWelcome);
 
-        Intent intent = getIntent();
-        String username = intent.getStringExtra("username");
-        textView.setText("Welcome, "+username);
+        preferences = getSharedPreferences("user", MODE_PRIVATE);
+        String userPreference =preferences.getString("username","");
+
+        textView.setText("Welcome, "+userPreference);
     }
 
     @Override
@@ -36,6 +40,11 @@ public class Welcome extends AppCompatActivity {
         int id =item.getItemId();
         switch (id){
             case R.id.logout:
+                SharedPreferences preferences = getSharedPreferences("user", MODE_PRIVATE);
+                SharedPreferences.Editor editor =preferences.edit();
+                editor.remove("username");
+                editor.commit();
+
                 startActivity(new Intent(Welcome.this, Login.class));
                 finish();
                 return true;
